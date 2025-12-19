@@ -38,6 +38,16 @@ function setupListeners() {
 
     document.getElementById('yearViewBtn').onclick = switchView;
 
+    document.getElementById('prevYear').onclick = () => {
+        currentDate.setFullYear(currentDate.getFullYear() - 1);
+        renderYearWithAnimation('prev');
+    };
+
+    document.getElementById('nextYear').onclick = () => {
+        currentDate.setFullYear(currentDate.getFullYear() + 1);
+        renderYearWithAnimation('next');
+    };
+
     document.getElementById('exportJson').onclick = (e) => {
         e.preventDefault();
         window.location.href = '/api/export/json';
@@ -121,8 +131,25 @@ function renderMonth() {
     updateStats();
 }
 
+function renderYearWithAnimation(direction) {
+    const grid = document.getElementById('yearGrid');
+    grid.classList.add('transitioning');
+    
+    if (direction === 'prev') {
+        grid.classList.add('slide-left');
+    } else if (direction === 'next') {
+        grid.classList.add('slide-right');
+    }
+    
+    setTimeout(() => {
+        renderYear();
+        grid.classList.remove('transitioning', 'slide-left', 'slide-right');
+    }, 300);
+}
+
 function renderYear() {
     const year = currentDate.getFullYear();
+    document.getElementById('currentYear').textContent = year;
     const grid = document.getElementById('yearGrid');
     grid.innerHTML = '';
 

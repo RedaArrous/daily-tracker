@@ -254,10 +254,39 @@ h1 {
     }
 }
 
+.year-nav-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.year-nav-controls h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    min-width: 120px;
+    text-align: center;
+    color: var(--text-dark);
+}
+
 .year-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 30px;
+    transition: all 0.3s ease;
+}
+
+.year-grid.transitioning {
+    opacity: 0;
+}
+
+.year-grid.slide-left {
+    transform: translateX(-20px);
+}
+
+.year-grid.slide-right {
+    transform: translateX(20px);
 }
 
 .mini-month {
