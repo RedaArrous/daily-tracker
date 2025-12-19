@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Goal Tracker</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <h1>Goal Tracker</h1>
+            <p class="subtitle">Mark the days you achieve your goals</p>
+        </header>
+
+        <!-- Controls -->
+        <div class="controls">
+            <div class="month-nav">
+                <button id="prevMonth" class="nav-btn" aria-label="Previous month">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="15 18 9 12 15 6"></polyline>
+                    </svg>
+                </button>
+                <h2 id="currentMonth">December 2025</h2>
+                <button id="nextMonth" class="nav-btn" aria-label="Next month">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="action-btns">
+                <button id="todayBtn" class="btn btn-secondary">Today</button>
+                <button id="yearViewBtn" class="btn btn-secondary">Year View</button>
+                <div class="dropdown">
+                    <button class="btn btn-primary">Export Data</button>
+                    <div class="dropdown-menu">
+                        <a href="#" id="exportJson">Export as JSON</a>
+                        <a href="#" id="exportCsv">Export as CSV</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Month View -->
+        <div id="monthView" class="view-active">
+            <div class="calendar">
+                <div class="weekdays">
+                    <div>Sun</div>
+                    <div>Mon</div>
+                    <div>Tue</div>
+                    <div>Wed</div>
+                    <div>Thu</div>
+                    <div>Fri</div>
+                    <div>Sat</div>
+                </div>
+                <div id="calendarDays" class="days-grid"></div>
+            </div>
+        </div>
+
+        <!-- Year View -->
+        <div id="yearView" class="view-hidden">
+            <div id="yearGrid" class="year-grid"></div>
+        </div>
+
+        <!-- Stats Footer -->
+        <footer>
+            <div class="stats">
+                <div class="stat">
+                    <div class="stat-value" id="monthCount">0</div>
+                    <div class="stat-label">This Month</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value" id="totalCount">0</div>
+                    <div class="stat-label">Total Days</div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
