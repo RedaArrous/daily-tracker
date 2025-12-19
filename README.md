@@ -2,6 +2,8 @@
 
 A minimalist web app to track your daily goal achievements with a beautiful calendar interface.
 
+> **Note:** This app was vibe coded and is not my own original work. It was created with AI assistance.
+
 ## Features
 
 - ✅ Mark days as completed when you achieve your goals
