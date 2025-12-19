@@ -1,8 +1,12 @@
 # Goal Tracker Calendar
 
-A minimalist web app to track your daily goal achievements with a beautiful calendar interface.
+## ⚠️ **DISCLAIMER**
 
-> **Note:** This app was vibe coded and is not my own original work. It was created with AI assistance.
+**This app was vibe coded with AI assistance and is not my own original work.**
+
+---
+
+A minimalist web app to track your daily goal achievements with a beautiful calendar interface.
 
 ## Features
 
