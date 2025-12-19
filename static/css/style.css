@@ -197,6 +197,19 @@ h1 {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     gap: 8px;
+    transition: all 0.3s ease;
+}
+
+.days-grid.transitioning {
+    opacity: 0;
+}
+
+.days-grid.slide-left {
+    transform: translateX(-20px);
+}
+
+.days-grid.slide-right {
+    transform: translateX(20px);
 }
 
 .day {

@@ -22,12 +22,12 @@ async function loadData() {
 function setupListeners() {
     document.getElementById('prevMonth').onclick = () => {
         currentDate.setMonth(currentDate.getMonth() - 1);
-        renderMonth();
+        renderMonthWithAnimation('prev');
     };
 
     document.getElementById('nextMonth').onclick = () => {
         currentDate.setMonth(currentDate.getMonth() + 1);
-        renderMonth();
+        renderMonthWithAnimation('next');
     };
 
     document.getElementById('todayBtn').onclick = () => {
@@ -63,19 +63,38 @@ function switchView() {
     currentView = currentView === 'month' ? 'year' : 'month';
     const monthView = document.getElementById('monthView');
     const yearView = document.getElementById('yearView');
+    const monthNavControls = document.getElementById('monthNavControls');
     const btn = document.getElementById('yearViewBtn');
 
     if (currentView === 'year') {
         monthView.className = 'view-hidden';
         yearView.className = 'view-active';
+        monthNavControls.style.display = 'none';
         btn.textContent = 'Month View';
         renderYear();
     } else {
         monthView.className = 'view-active';
         yearView.className = 'view-hidden';
+        monthNavControls.style.display = 'flex';
         btn.textContent = 'Year View';
         renderMonth();
     }
+}
+
+function renderMonthWithAnimation(direction) {
+    const grid = document.getElementById('calendarDays');
+    grid.classList.add('transitioning');
+    
+    if (direction === 'prev') {
+        grid.classList.add('slide-left');
+    } else if (direction === 'next') {
+        grid.classList.add('slide-right');
+    }
+    
+    setTimeout(() => {
+        renderMonth();
+        grid.classList.remove('transitioning', 'slide-left', 'slide-right');
+    }, 300);
 }
 
 function renderMonth() {
