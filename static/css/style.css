@@ -139,7 +139,8 @@ h1 {
 .dropdown-menu {
     display: none;
     position: absolute;
-    top: 45px;
+    top: 100%;
+    margin-top: 5px;
     right: 0;
     background: var(--bg-white);
     min-width: 160px;
@@ -150,7 +151,8 @@ h1 {
     z-index: 1000;
 }
 
-.dropdown:hover .dropdown-menu {
+.dropdown:hover .dropdown-menu,
+.dropdown-menu:hover {
     display: block;
     animation: fadeIn 0.3s ease;
 }
