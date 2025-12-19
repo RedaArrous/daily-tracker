@@ -2,7 +2,7 @@
 
 ## ⚠️ **DISCLAIMER**
 
-**This app was vibe coded with AI assistance and is not my own original work.**
+**This app was fully vibe coded with AI assistance and is not my own original work.**
 
 ---
 
