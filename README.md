@@ -42,12 +42,14 @@
 #### Option 1: Using Git (Recommended)
 
 1. **Clone the repository**
+
    ```bash
    git clone <your-repo-url>
    cd app
    ```
 
 2. **Create a virtual environment** (recommended)
+
    ```bash
    # Windows
    python -m venv venv
@@ -59,16 +61,19 @@
    ```
 
 3. **Install dependencies**
+
    ```bash
    pip install -r requirements.txt
    ```
 
 4. **Run the application**
+
    ```bash
    python app.py
    ```
 
 5. **Open your browser** and go to:
+
    ```
    http://127.0.0.1:5000
    ```
@@ -115,23 +120,27 @@ python app.py
 #### 2. Basic Operations
 
 **Marking Days as Completed:**
+
 - **Click any day** in the calendar to mark it as completed (turns green ✓)
 - **Click again** on a completed day to unmark it (turns gray)
 - Completed days are instantly saved to the database
 
 **Navigation:**
+
 - **Arrow buttons (← →)** - Navigate between months
 - **"Today" button** - Jump back to current month
 - **"Year View" button** - See all 12 months at once
 - In year view, click any day to mark/unmark it
 
 **Statistics:**
+
 - **This Month** - Shows completed days in current month
 - **Total Days** - Shows all completed days ever
 
 #### 3. Notes Feature (Right-Click)
 
 **Adding a Note:**
+
 1. **Right-click** on any day in the calendar
 2. A modal window appears with a text area
 3. **Type your note** (supports any text, quotes, emojis, etc.)
@@ -139,16 +148,19 @@ python app.py
 5. A small **dot indicator** appears on that day
 
 **Editing a Note:**
+
 1. **Right-click** on a day that has a note
 2. The existing note appears in the text area
 3. **Modify** the text as needed
 4. **Click "Save Note"** to update
 
 **Viewing Notes:**
+
 - **Hover** over the dot indicator to see a preview
 - **Right-click** to see the full note
 
 **Deleting a Note:**
+
 1. Right-click on the day
 2. **Clear all text** in the text area
 3. Click "Save Note"
@@ -157,12 +169,14 @@ python app.py
 #### 4. Exporting Your Data
 
 **Export as JSON:**
+
 1. Click **"Export Data"** button
 2. Select **"Export as JSON"**
 3. File downloads as `goals_export_YYYYMMDD.json`
 4. Use this for backups or data analysis
 
 **Export as CSV:**
+
 1. Click **"Export Data"** button
 2. Select **"Export as CSV"**
 3. File downloads as `goals_export_YYYYMMDD.csv`
@@ -177,12 +191,14 @@ The MarkToday tool lets you quickly mark today as completed without opening the 
 #### Creating the Executable (.exe)
 
 **Step 1: Install PyInstaller**
+
 ```bash
 # Make sure you're in the app directory with venv activated
 pip install pyinstaller
 ```
 
 **Step 2: Build the Executable**
+
 ```bash
 # Run PyInstaller
 pyinstaller --onefile --name="MarkToday" --console mark_today.py
@@ -192,6 +208,7 @@ pyinstaller --onefile --name="MarkToday" --console mark_today.py
 ```
 
 **Step 3: Copy to App Directory**
+
 ```bash
 # Windows
 copy dist\MarkToday.exe .
@@ -201,6 +218,7 @@ cp dist/MarkToday MarkToday
 ```
 
 **Step 4: Optional - Create Desktop Shortcut**
+
 1. Right-click `MarkToday.exe`
 2. Select "Create shortcut"
 3. Move shortcut to your desktop
@@ -209,6 +227,7 @@ cp dist/MarkToday MarkToday
 #### Using the MarkToday Tool
 
 **Method 1: Double-Click the .exe**
+
 1. **Double-click** `MarkToday.exe` in your app folder
 2. A console window opens
 3. Shows today's date and current status
@@ -219,6 +238,7 @@ cp dist/MarkToday MarkToday
 8. Press Enter to close
 
 **Method 2: Command Line**
+
 ```bash
 # Navigate to app directory
 cd path/to/app
@@ -230,14 +250,16 @@ cd path/to/app
 
 **Example Workflows:**
 
-*Quick mark without note:*
+_Quick mark without note:_
+
 ```
 Do you want to add a note for today? (y/n): n
 ✓ No note added
 ✓ CSV file updated successfully!
 ```
 
-*Mark with a note:*
+_Mark with a note:_
+
 ```
 Do you want to add a note for today? (y/n): y
 Enter your note (press Enter when done):
@@ -246,7 +268,8 @@ Enter your note (press Enter when done):
 ✓ CSV file updated successfully!
 ```
 
-*Editing today's existing note:*
+_Editing today's existing note:_
+
 ```
 ✓ Today is already marked as completed!
 Existing note: "Old note"
@@ -258,6 +281,7 @@ Enter your note (press Enter when done):
 ```
 
 **Important Notes:**
+
 - The `.exe` must be in the **same directory** as `goals.db` and `data.csv`
 - Running it multiple times on the same day won't create duplicates
 - Changes are automatically synced to both database and CSV
