@@ -45,7 +45,7 @@
 
    ```bash
    git clone <your-repo-url>
-   cd app
+   cd daily-tracker
    ```
 
 2. **Create a virtual environment** (recommended)
@@ -53,7 +53,7 @@
    ```bash
    # Windows
    python -m venv venv
-   venv\Scripts\activate
+   source venv\Scripts\activate
 
    # macOS/Linux
    python3 -m venv venv
