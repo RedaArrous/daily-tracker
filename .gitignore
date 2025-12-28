@@ -57,8 +57,5 @@ Thumbs.db
 .DS_Store
 desktop.ini
 
-# Compiled executables
-*.exe
-
 # Test scripts (optional - remove if you want to track tests)
 test_*.py

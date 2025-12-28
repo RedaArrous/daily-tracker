@@ -188,42 +188,6 @@ python app.py
 
 The MarkToday tool lets you quickly mark today as completed without opening the web browser.
 
-#### Creating the Executable (.exe)
-
-**Step 1: Install PyInstaller**
-
-```bash
-# Make sure you're in the app directory with venv activated
-pip install pyinstaller
-```
-
-**Step 2: Build the Executable**
-
-```bash
-# Run PyInstaller
-pyinstaller --onefile --name="MarkToday" --console mark_today.py
-
-# Wait for the build to complete (15-30 seconds)
-# Output will be in: dist/MarkToday.exe
-```
-
-**Step 3: Copy to App Directory**
-
-```bash
-# Windows
-copy dist\MarkToday.exe .
-
-# macOS/Linux
-cp dist/MarkToday MarkToday
-```
-
-**Step 4: Optional - Create Desktop Shortcut**
-
-1. Right-click `MarkToday.exe`
-2. Select "Create shortcut"
-3. Move shortcut to your desktop
-4. Rename to "Mark Today" (remove .exe)
-
 #### Using the MarkToday Tool
 
 **Method 1: Double-Click the .exe**
