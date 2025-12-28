@@ -1,6 +1,8 @@
 let currentDate = new Date();
 let completedDays = new Set();
+let notesData = {};
 let currentView = 'month';
+let currentNoteDate = null;
 
 document.addEventListener('DOMContentLoaded', async () => {
     await loadData();
@@ -13,6 +15,7 @@ async function loadData() {
         const res = await fetch('/api/days');
         const data = await res.json();
         completedDays = new Set(data.completed_days);
+        notesData = data.notes || {};
         updateStats();
     } catch (err) {
         console.error('Error loading data:', err);
@@ -57,6 +60,22 @@ function setupListeners() {
         e.preventDefault();
         window.location.href = '/api/export/csv';
     };
+
+    // Note modal listeners
+    const modal = document.getElementById('noteModal');
+    const closeBtn = document.querySelector('.close');
+    const cancelBtn = document.getElementById('cancelNote');
+    const saveBtn = document.getElementById('saveNote');
+
+    closeBtn.onclick = () => modal.style.display = 'none';
+    cancelBtn.onclick = () => modal.style.display = 'none';
+    saveBtn.onclick = saveNote;
+
+    window.onclick = (e) => {
+        if (e.target === modal) {
+            modal.style.display = 'none';
+        }
+    };
 }
 
 function switchView() {
@@ -84,13 +103,13 @@ function switchView() {
 function renderMonthWithAnimation(direction) {
     const grid = document.getElementById('calendarDays');
     grid.classList.add('transitioning');
-    
+
     if (direction === 'prev') {
         grid.classList.add('slide-left');
     } else if (direction === 'next') {
         grid.classList.add('slide-right');
     }
-    
+
     setTimeout(() => {
         renderMonth();
         grid.classList.remove('transitioning', 'slide-left', 'slide-right');
@@ -135,7 +154,22 @@ function renderMonth() {
             el.classList.add('completed');
         }
 
+        // Add note indicator if note exists
+        if (notesData[dateStr] && notesData[dateStr].trim()) {
+            const noteIndicator = document.createElement('div');
+            noteIndicator.className = 'note-indicator';
+            noteIndicator.title = notesData[dateStr];
+            el.appendChild(noteIndicator);
+        }
+
         el.onclick = () => toggleDay(dateStr, el);
+
+        // Right-click to add/edit note
+        el.oncontextmenu = (e) => {
+            e.preventDefault();
+            openNoteModal(dateStr);
+        };
+
         grid.appendChild(el);
     }
 
@@ -153,13 +187,13 @@ function renderMonth() {
 function renderYearWithAnimation(direction) {
     const grid = document.getElementById('yearGrid');
     grid.classList.add('transitioning');
-    
+
     if (direction === 'prev') {
         grid.classList.add('slide-left');
     } else if (direction === 'next') {
         grid.classList.add('slide-right');
     }
-    
+
     setTimeout(() => {
         renderYear();
         grid.classList.remove('transitioning', 'slide-left', 'slide-right');
@@ -212,8 +246,22 @@ function renderYear() {
                 el.classList.add('completed');
             }
 
+            // Add note indicator if note exists
+            if (notesData[dateStr] && notesData[dateStr].trim()) {
+                const noteIndicator = document.createElement('div');
+                noteIndicator.className = 'note-indicator';
+                noteIndicator.title = notesData[dateStr];
+                el.appendChild(noteIndicator);
+            }
+
             el.onclick = async () => {
                 await toggleDay(dateStr, el);
+            };
+
+            // Right-click to add/edit note
+            el.oncontextmenu = (e) => {
+                e.preventDefault();
+                openNoteModal(dateStr);
             };
 
             daysGrid.appendChild(el);
@@ -234,7 +282,17 @@ function makeDay(num, isOther) {
 
 async function toggleDay(dateStr, el) {
     try {
-        const res = await fetch(`/api/days/${dateStr}`, { method: 'POST' });
+        const res = await fetch(`/api/days/${dateStr}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (!res.ok) {
+            throw new Error(`HTTP error! status: ${res.status}`);
+        }
+
         const data = await res.json();
 
         if (data.success) {
@@ -246,9 +304,12 @@ async function toggleDay(dateStr, el) {
                 el.classList.remove('completed');
             }
             updateStats();
+        } else {
+            console.error('Toggle failed:', data.error);
         }
     } catch (err) {
         console.error('Error toggling day:', err);
+        alert('Failed to update day status. Please try again.');
     }
 }
 
@@ -270,4 +331,61 @@ function updateStats() {
 
 function pad(n) {
     return String(n).padStart(2, '0');
+}
+
+function openNoteModal(dateStr) {
+    currentNoteDate = dateStr;
+    const modal = document.getElementById('noteModal');
+    const dateInput = document.getElementById('modalDate');
+    const noteInput = document.getElementById('noteInput');
+
+    // Format date nicely
+    const date = new Date(dateStr + 'T00:00:00');
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    dateInput.textContent = date.toLocaleDateString('en-US', options);
+
+    // Load existing note
+    noteInput.value = notesData[dateStr] || '';
+
+    modal.style.display = 'flex';
+    noteInput.focus();
+}
+
+async function saveNote() {
+    const noteInput = document.getElementById('noteInput');
+    const note = noteInput.value.trim();
+
+    try {
+        const res = await fetch(`/api/days/${currentNoteDate}/note`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ note: note })
+        });
+
+        if (!res.ok) {
+            throw new Error(`HTTP error! status: ${res.status}`);
+        }
+
+        const data = await res.json();
+
+        if (data.success) {
+            notesData[currentNoteDate] = note;
+            document.getElementById('noteModal').style.display = 'none';
+
+            // Re-render to show note indicator
+            if (currentView === 'month') {
+                renderMonth();
+            } else {
+                renderYear();
+            }
+        } else {
+            console.error('Save note failed:', data.error);
+            alert('Failed to save note. Please try again.');
+        }
+    } catch (err) {
+        console.error('Error saving note:', err);
+        alert('Failed to save note. Please try again.');
+    }
 }

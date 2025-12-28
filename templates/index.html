@@ -92,6 +92,24 @@
         </footer>
     </div>
 
+    <!-- Note Modal -->
+    <div id="noteModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Add Note</h2>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <p id="modalDate" class="modal-date"></p>
+                <textarea id="noteInput" placeholder="Add your note for this day..." rows="6"></textarea>
+            </div>
+            <div class="modal-footer">
+                <button id="cancelNote" class="btn btn-secondary">Cancel</button>
+                <button id="saveNote" class="btn btn-primary">Save Note</button>
+            </div>
+        </div>
+    </div>
+
     <script src="{{ url_for('static', filename='js/app.js') }}"></script>
 </body>
 </html>

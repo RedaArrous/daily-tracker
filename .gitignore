@@ -18,11 +18,12 @@ ENV/
 instance/
 .webassets-cache
 
-# Database
+# Database and data files (user-specific, not tracked)
 *.db
 *.sqlite
 *.sqlite3
 goals.db
+data.csv
 
 # Environment variables
 .env
@@ -35,7 +36,6 @@ goals.db
 *.swp
 *.swo
 *~
-.DS_Store
 
 # Logs
 *.log
@@ -47,12 +47,18 @@ logs/
 htmlcov/
 .tox/
 
-# Distribution
+# PyInstaller build files
 build/
 dist/
-*.egg-info/
+*.spec
 
-# OS
+# OS specific
 Thumbs.db
 .DS_Store
 desktop.ini
+
+# Compiled executables
+*.exe
+
+# Test scripts (optional - remove if you want to track tests)
+test_*.py
